@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Kasboek</title>
+  <meta name="description" content="Maandoverzicht van je bankrekeningen: vaste lasten bevestigen, uitgaven toevoegen, prognose en vermogen.">
+  <meta name="theme-color" content="#2b4c7e" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#11161c" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="light dark">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Kasboek">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;450;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap">
+  <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+<section id="screen-login" hidden>
+  <div class="login-card">
+    <div class="brand"><img src="./icons/icon-192.png" alt=""><h1>Kasboek</h1></div>
+    <p>Log in om je kasboek te openen. Je gegevens worden gesynchroniseerd tussen al je apparaten.</p>
+    <form id="login-form" novalidate>
+      <div class="field"><label for="login-email">E-mailadres</label><input id="login-email" name="email" type="email" autocomplete="username" inputmode="email" required></div>
+      <div class="field" style="margin-top:10px"><label for="login-pw">Wachtwoord</label><input id="login-pw" name="password" type="password" autocomplete="current-password" required></div>
+      <div class="login-msg" id="login-msg"></div>
+      <div class="login-actions">
+        <button class="btn primary" id="btn-login" type="submit">Inloggen</button>
+        <button class="btn" id="btn-signup" type="button">Account aanmaken</button>
+        <button class="btn ghost sm" id="btn-reset" type="button">Wachtwoord vergeten?</button>
+      </div>
+    </form>
+    <div class="login-foot">Eerste keer? Maak één account aan met je e-mailadres; daarna log je op elk apparaat met hetzelfde account in.</div>
+  </div>
+</section>
+
+<header class="topbar" id="app-header">
+  <div class="topbar-inner">
+    <div class="brand">
+      <h1>Kasboek</h1>
+      <span class="sub" id="brand-sub">6 rekeningen</span>
+    </div>
+    <span class="sync" id="sync"></span>
+    <nav class="tabs" role="tablist" id="tabs">
+      <button class="tab" role="tab" data-tab="maand" aria-selected="true">Maand<span class="badge hidden" id="due-badge"></span></button>
+      <button class="tab" role="tab" data-tab="prognose" aria-selected="false">Prognose</button>
+      <button class="tab" role="tab" data-tab="vast" aria-selected="false">Vaste lasten</button>
+      <button class="tab" role="tab" data-tab="leningen" aria-selected="false">Leningen</button>
+      <button class="tab" role="tab" data-tab="woning" aria-selected="false">Woning</button>
+      <button class="tab" role="tab" data-tab="beleggingen" aria-selected="false">Beleggingen</button>
+      <button class="tab" role="tab" data-tab="overig" aria-selected="false">Overig</button>
+      <button class="tab" role="tab" data-tab="instellingen" aria-selected="false">Instellingen</button>
+    </nav>
+  </div>
+</header>
+
+<main id="app-main">
+  <div id="notice-update" class="notice info hidden">
+    <span>↻</span><span class="grow">Er is een nieuwe versie van Kasboek.</span><button class="btn sm" id="btn-reload">Vernieuwen</button>
+  </div>
+  <div id="notice-storage" class="notice hidden">
+    <span>⚠︎</span>
+    <span class="grow">Geen verbinding met de opslag — wijzigingen worden alleen in deze browser bewaard.</span>
+  </div>
+  <div id="loading" class="empty"><strong>Kasboek laden…</strong>Rekeningen en vaste lasten worden opgehaald.</div>
+
+  <section class="panel" id="panel-maand" hidden></section>
+  <section class="panel" id="panel-prognose" hidden></section>
+  <section class="panel" id="panel-vast" hidden></section>
+  <section class="panel" id="panel-leningen" hidden></section>
+  <section class="panel" id="panel-woning" hidden></section>
+  <section class="panel" id="panel-beleggingen" hidden></section>
+  <section class="panel" id="panel-overig" hidden></section>
+  <section class="panel" id="panel-instellingen" hidden></section>
+</main>
+
+<dialog id="dlg"></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="./vendor/supabase-js-2.115.0.min.js"></script>
+<script src="./config.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>
